@@ -73,8 +73,10 @@ def ner(text, model, lang):
     elif model == "stanza":
         if lang == "en":
             doc = stanza_en(text)
+            return [f'token: {token.text}\tner: {token.ner}\n' for sent in doc.sentences for token in sent.tokens]
         elif lang == "es":
             doc = stanza_es(text)
+            return [f'token: {token.text}\tner: {token.ner}\n' for sent in doc.sentences for token in sent.tokens]
     return doc.ents
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,14 +84,16 @@ def ner(text, model, lang):
 """ ONLY FOR TEST PURPOSES, TO BE REMOVED LATER """
 
 # TEST EUROPARL
-path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
+#path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
+path_en = "D:/OperaDownloads/Multilingual_NER-main/Multilingual_NER-main/Europarl Corpus/en-europarl.test.conll02"
 
 w_en, l_en, t_en = load_europarl(path_en)
 #print(w_en)
 #print(l_en)
 #print(t_en)
 
-path_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/es-europarl.test.conll02"
+#path_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/es-europarl.test.conll02"
+path_es = "D:/OperaDownloads/Multilingual_NER-main/Multilingual_NER-main/Europarl Corpus/es-europarl.test.conll02"
 
 w_es, l_es, t_es = load_europarl(path_es)
 
@@ -103,23 +107,29 @@ w_es, l_es, t_es = load_europarl(path_es)
 #    print(f"{ent.text:<25}{ent.label_:<15}")
 
 entities_st = ner(t_es, "stanza", "es")
-print("Stanza: " + str(len(entities_st)))
-for ent in entities_st:
-    print(f"{ent.text:<25}{ent.type:<15}")
+print(*entities_st, sep ='\n')
+#print("Stanza: " + str(len(entities_st)))
+#for ent in entities_st:
+#    print(f"{ent.text:<25}{ent.type:<15}")
 
 # TEST SUBTITLES
-path_bttf = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/Back To The Future (EN).txt"
+#path_bttf = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/Back To The Future (EN).txt"
+path_bttf = "D:/OperaDownloads/Multilingual_NER-main/Multilingual_NER-main/Movie subtitles/El Hoyo (EN).txt"
 
-text = load_subtitles(path_bttf)
+#text = load_subtitles(path_bttf)
+text2 = "Chris Manning teaches at Stanford University. He lives in the Bay Area."
 
 #entities_sp = ner(text, "spacy", "en")
 #for ent in entities_sp:
 #    print(f"{ent.text:<25}{ent.label_:<15}")
 
-#entities_st = ner(text, "stanza", "en")
+entities_st = ner(text2, "stanza", "en")
+print(*entities_st, sep ='\n')
 #for ent in entities_st:
 #    print(f"{ent.text:<25}{ent.type:<15}")
 
-path_eh = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (ES).txt"
+#path_eh = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (ES).txt"
+path_eh = "D:/OperaDownloads/Multilingual_NER-main/Multilingual_NER-main/Movie subtitles/El Hoyo (ES).txt"
+
 
 #print(load_subtitles(path_eh))
