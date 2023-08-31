@@ -1,5 +1,6 @@
 import spacy
 import stanza
+import re
 from spacy.tokens import Doc
 
 # SOURCE: https://stackoverflow.com/questions/65160277/spacy-tokenizer-with-only-whitespace-rule
@@ -70,8 +71,8 @@ def load_subtitles(filepath):
 
     args: filepath (string, full path of the subtitle file)
 
-    return: text (string of continuous text without blank lines and line 
-    breaks)
+    return: words (list of all words in the file),text (string of continuous 
+    text without blank lines and line breaks)
 
     note: the file path depends on the storage location of the file on the 
     computer, and can vary from computer to computer
@@ -84,7 +85,14 @@ def load_subtitles(filepath):
             if line.strip():
                 text += line.strip("\n") + " "
 
-    return text
+    text = re.sub(r'([.,:!?)])', r' \1', text)
+    text = re.sub(r'([¿¡(])', r'\1 ', text)
+    text = re.sub(r'\'', r' \' ', text)
+    text = re.sub(r'\\', r'', text)
+
+    words = text.split(" ")
+
+    return words, text
 
 def ner(text, model, lang):
     """Process the given text, and return the list of predicted labels
@@ -115,7 +123,43 @@ def ner(text, model, lang):
             doc = stanza_es(text)
             preds = [token.ner for sent in doc.sentences for token in sent.tokens]
     return preds
-        
+
+
+def preprocess_labels(pred_labels):
+    # TODO:
+    """Transform the fine-grained labels predicted by SpaCy into the 4 label
+    format (PER, LOC, ORG, MISC), in which the europarl-data is annotated
+    
+    args: pred_labels (list of all predicted labels, fine-grained)
+    
+    return: preprocessed (list of all labels, transformed into 4 label format)
+    
+    note: the transformation is done according to our findings on the europarl-
+    data: PER = PERSON; LOC = GPE, LOC; ORG = ORG; MISC = NORP, LANGUAGE, EVENT,
+    (ORG), LAW; O = O, FAC, PRODUCT, WORK_OF_ART, DATE, TIME, PERCENT, MONEY,
+    QUANTITY, ORDINAL, CARDINAL"""
+
+    preprocessed = pred_labels
+
+    return preprocessed
+
+
+def label_match(label1, label2):
+    """Check if two labels are matching
+    
+    args: label1, label2 (strings)
+    
+    return: a truth value"""
+
+    if ((label1 == "O" and label2 == "O") or 
+        ("PER" in label1 and "PER" in label2) or 
+        ("LOC" in label1 and "LOC" in label2) or 
+        ("ORG" in label1 and "ORG" in label2) or 
+        ("MISC" in label1 and "MISC" in label2)):
+        return True
+    else:
+        return False
+
 
 def eval_europarl(word_list, gold_labels, pred_labels, model):
     """Evaluate the europarl-file: compare predicted labels and the gold 
@@ -136,19 +180,31 @@ def eval_europarl(word_list, gold_labels, pred_labels, model):
     only
     """
 
-    accuracy = 0.0
-    differences = []
-    
-    if model == "spacy":
-        # preprocessing
-        pass
-    elif model == "stanza":
-        pass
+    if len(gold_labels) == len(pred_labels):
+        accuracy = 0.0
+        diff_indexes = []
+        differences = []
+        
+        if model == "spacy":
+            pred_labels = preprocess_labels(pred_labels)
 
-    return accuracy, differences
+        for i in range(len(gold_labels)):
+            if label_match(gold_labels[i], pred_labels[i]):
+                accuracy += 1.0
+            else:
+                diff_indexes.append(i)
+
+        for index in diff_indexes:
+            diff = [word_list[index], gold_labels[index], pred_labels[index]]
+            differences.append(diff)
+
+        accuracy = accuracy / len(gold_labels)
+
+        return accuracy, differences
 
 
 def eval_subtitles(spacy_labels, stanza_labels):
+    # TODO:
     """Evaluate the subtitle-file: measure the concordance between the labels
     predicted by the SpaCy and Stanza language models, and return a list of
     all words which were annotated differently with the two models
@@ -160,17 +216,27 @@ def eval_subtitles(spacy_labels, stanza_labels):
     language models), differences (list of lists, consisting of word and the 
     labels predicted by SpaCy and Stanza)"""
 
-    concordance = 0.0
-    differences = []
+    if len(spacy_labels) == len(stanza_labels):
+        concordance = 0.0
+        differences = []
 
-    return concordance, differences
+        spacy_labels = preprocess_labels(spacy_labels)
+
+        return concordance, differences
 
 
 # TEST
-#path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
+#print(label_match("O","O")) # True
+#print(label_match("O","B-LOC")) # False
+#print(label_match("B-LOC","B-LOC")) # True
+#print(label_match("B-LOC","S-LOC")) # True
+#print(label_match("B-LOC","B-ORG")) # False
+
+path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
 #path_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/es-europarl.test.conll02"
-#w_en, l_en, t_en = load_europarl(path_en)
+w_en, l_en, t_en = load_europarl(path_en)
 #w_es, l_es, t_es = load_europarl(path_es)
+#print(t_en)
 
 #entities_sp = ner(t_en, "spacy", "en")
 #print(len(w_en))
@@ -190,7 +256,7 @@ def eval_subtitles(spacy_labels, stanza_labels):
     #    print("falsch: " + w_es[i] + " " + entities_sp[i])
 #print("FERTIG")
 
-#entities_st = ner(t_en, "stanza", "en")
+entities_st = ner(t_en, "stanza", "en")
 #print(len(w_en))
 #print(len(entities_st))
 #print("Word\tGoldLabel\tPrediction")
@@ -199,6 +265,12 @@ def eval_subtitles(spacy_labels, stanza_labels):
 #print("richtig")
 #print(*entities_st, sep = '\n')
 
+accuracy, differences = eval_europarl(w_en, l_en, entities_st, "stanza")
+print(accuracy)
+print("Word:                    Gold Label:    Prediction:    ")
+for i in range(len(differences)):
+    print(f"{differences[i][0]:<25}{differences[i][1]:<15}{differences[i][2]:<15}")
+
 #entities_st = ner(t_es, "stanza", "es")
 #print(len(w_es))
 #print(len(entities_st))
@@ -206,23 +278,33 @@ def eval_subtitles(spacy_labels, stanza_labels):
     #print(w_es[i] + "\t" + l_es[i] + "\t" + entities_st[i])
 #print(*entities_st, sep = '\n')
 
-""" 
-PROBLEM: Invalid empty string in whitespace tokenizer
+#accuracy, differences = eval_europarl(w_es, l_es, entities_st, "stanza")
+#print(accuracy)
+#print("Word:                    Gold Label:    Prediction:    ")
+#for i in range(len(differences)):
+#    print(f"{differences[i][0]:<25}{differences[i][1]:<15}{differences[i][2]:<15}")
 
-path_eh_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (EN).txt"
-path_eh_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (ES).txt"
 
-text_en = load_subtitles(path_eh_en)
-text_es = load_subtitles(path_eh_es)
+"""PROBLEM: Invalid empty string in whitespace tokenizer"""
 
-entities_sp_en = ner(text_en, "spacy", "en")
-entities_st_en = ner(text_en, "stanza", "en")
+#path_eh_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (EN).txt"
+#path_eh_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (ES).txt"
 
-print(len(entities_sp_en))
-print(len(entities_st_en))
+#words_en, text_en = load_subtitles(path_eh_en)
+#text_es = load_subtitles(path_eh_es)
+#print(words_en)
+#print(text_en)
+#print(len(text_en))
+#print("start" + text_en[7419:7430] + "end")
 
-entities_sp_es = ner(text_en, "spacy", "es")
-entities_st_es = ner(text_en, "stanza", "es")
+#entities_sp_en = ner(text_en, "spacy", "en")
+#entities_st_en = ner(text_en, "stanza", "en")
 
-print(len(entities_sp_es))
-print(len(entities_st_es)) """
+#print(len(entities_sp_en))
+#print(len(entities_st_en))
+
+#entities_sp_es = ner(text_es, "spacy", "es")
+#entities_st_es = ner(text_es, "stanza", "es")
+
+#print(len(entities_sp_es))
+#print(len(entities_st_es))
