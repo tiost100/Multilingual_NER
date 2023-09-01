@@ -125,7 +125,7 @@ def ner(text, model, lang):
     return preds
 
 
-def preprocess_labels(pred_labels):
+def postprocess_labels(pred_labels):
     # TODO:
     """Transform the fine-grained labels predicted by SpaCy into the 4 label
     format (PER, LOC, ORG, MISC), in which the europarl-data is annotated
@@ -139,9 +139,9 @@ def preprocess_labels(pred_labels):
     (ORG), LAW; O = O, FAC, PRODUCT, WORK_OF_ART, DATE, TIME, PERCENT, MONEY,
     QUANTITY, ORDINAL, CARDINAL"""
 
-    preprocessed = pred_labels
+    postprocessed = pred_labels
 
-    return preprocessed
+    return postprocessed
 
 
 def label_match(label1, label2):
@@ -186,7 +186,7 @@ def eval_europarl(word_list, gold_labels, pred_labels, model):
         differences = []
         
         if model == "spacy":
-            pred_labels = preprocess_labels(pred_labels)
+            pred_labels = postprocess_labels(pred_labels)
 
         for i in range(len(gold_labels)):
             if label_match(gold_labels[i], pred_labels[i]):
@@ -220,7 +220,7 @@ def eval_subtitles(spacy_labels, stanza_labels):
         concordance = 0.0
         differences = []
 
-        spacy_labels = preprocess_labels(spacy_labels)
+        spacy_labels = postprocess_labels(spacy_labels)
 
         return concordance, differences
 
