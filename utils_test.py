@@ -195,7 +195,7 @@ def eval_europarl(word_list, gold_labels, pred_labels, model):
                 diff_indexes.append(i)
 
         for index in diff_indexes:
-            diff = [word_list[index], gold_labels[index], pred_labels[index]]
+            diff = [index, word_list[index], gold_labels[index], pred_labels[index]]
             differences.append(diff)
 
         accuracy = accuracy / len(gold_labels)
@@ -232,9 +232,9 @@ def eval_subtitles(spacy_labels, stanza_labels):
 #print(label_match("B-LOC","S-LOC")) # True
 #print(label_match("B-LOC","B-ORG")) # False
 
-path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
+#path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
 #path_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/es-europarl.test.conll02"
-w_en, l_en, t_en = load_europarl(path_en)
+#w_en, l_en, t_en = load_europarl(path_en)
 #w_es, l_es, t_es = load_europarl(path_es)
 #print(t_en)
 
@@ -256,7 +256,7 @@ w_en, l_en, t_en = load_europarl(path_en)
     #    print("falsch: " + w_es[i] + " " + entities_sp[i])
 #print("FERTIG")
 
-entities_st = ner(t_en, "stanza", "en")
+#entities_st = ner(t_en, "stanza", "en")
 #print(len(w_en))
 #print(len(entities_st))
 #print("Word\tGoldLabel\tPrediction")
@@ -265,11 +265,11 @@ entities_st = ner(t_en, "stanza", "en")
 #print("richtig")
 #print(*entities_st, sep = '\n')
 
-accuracy, differences = eval_europarl(w_en, l_en, entities_st, "stanza")
-print(accuracy)
-print("Word:                    Gold Label:    Prediction:    ")
-for i in range(len(differences)):
-    print(f"{differences[i][0]:<25}{differences[i][1]:<15}{differences[i][2]:<15}")
+#accuracy, differences = eval_europarl(w_en, l_en, entities_st, "stanza")
+#print(accuracy)
+#print("Word:                    Gold Label:    Prediction:    ")
+#for i in range(len(differences)):
+#    print(f"{differences[i][0]:<25}{differences[i][1]:<15}{differences[i][2]:<15}")
 
 #entities_st = ner(t_es, "stanza", "es")
 #print(len(w_es))
@@ -289,14 +289,19 @@ for i in range(len(differences)):
 
 #path_eh_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (EN).txt"
 #path_eh_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (ES).txt"
+part_bttf = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/Back To The Future (EN).txt"
 
+words, text = load_subtitles(part_bttf)
 #words_en, text_en = load_subtitles(path_eh_en)
 #text_es = load_subtitles(path_eh_es)
 #print(words_en)
 #print(text_en)
 #print(len(text_en))
-#print("start" + text_en[7419:7430] + "end")
+#print("start|" + text_en[7419:7430] + "|end")
+#print("start|" + text_en[7426] + "|end")
 
+print("start|" + text[170:185] + "|end")
+entities = ner(text, "spacy", "en")
 #entities_sp_en = ner(text_en, "spacy", "en")
 #entities_st_en = ner(text_en, "stanza", "en")
 
