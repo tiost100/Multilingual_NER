@@ -141,18 +141,19 @@ def postprocess_labels(pred_labels):
 
         #replacement_label as a dictonary.
     replacement_label = {"PERSON": "PER", "GPE": "LOC"}
-
         #updating the dictonray. The labels in the list are those that need to be replaced.
         #Whilst the second argument is the label they're being replaced with.
     replacement_label.update(dict.fromkeys(['NORP', 'LANGUAGE', 'EVENT', 'LAW'], 'MISC'))
     replacement_label.update(dict.fromkeys(['FAC', 'PRODUCT', 'WORK_OF_ART', 'DATE', 'TIME', 'PERCENT', 'MONEY', 'QUANTITY', 'ORDINAL', 'CARDINAL'], 'O'))
-       
         #re.sub() from the "re" (regular expresion) modul. Replaces ALL instances of the FIRST argument with the SECOND argument that are in the THIRD argument
         #'\b' is needed as it indicated the begining and end of a word, so that we only replace labels that are exactly like the given argument and not words that contain the label. 
     for old, new in replacement_label.items():
         pred_labels = [re.sub(r'\b{}\b'.format(old), new, label) for label in pred_labels]
 
-    postprocessed = pred_labels
+        #replaces the hanging '-' and hanging iob's from the labels.
+        #For loop through each label, checked if a hanging '-' or iob. O in the beginning means '-' at the end means iob. Then replace them with O
+        #One could also put each iob + label varient in the dic. though that get's quite big; 'O' only appears if it's a non-entity. 
+    postprocessed = ['O' if label.startswith('O-') or label.endswith('-O') else label for label in pred_labels]
 
     return postprocessed
 
