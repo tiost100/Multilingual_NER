@@ -8,16 +8,15 @@ from spacy.tokens import Doc
 # START 
 class WhitespaceTokenizer(object):
     """Tokenizer splitting text on whitespaces only, for processing of texts
-    in English with the SpaCy language model. With the default SpaCy tokenizer,
-    the length of the doc was bigger than the length of the list with the gold
-    labels.
+    with the SpaCy language model. With the default SpaCy tokenizer, the length
+    of the doc was bigger than the length of the list with the gold labels.
     """
 
     def __init__(self, vocab):
         self.vocab = vocab
 
     def __call__(self, text):
-        words = text.split(' ')
+        words = text.split()
         # All tokens 'own' a subsequent space character in this tokenizer
         spaces = [True] * len(words)
         return Doc(self.vocab, words=words, spaces=spaces)
@@ -25,9 +24,10 @@ class WhitespaceTokenizer(object):
 # loading the spaCy and Stanza language models for English and Spanish
 spacy_en = spacy.load("en_core_web_md")
 spacy_en.tokenizer = WhitespaceTokenizer(spacy_en.vocab)
+spacy_es = spacy.load("es_core_news_md")
+spacy_es.tokenizer = WhitespaceTokenizer(spacy_es.vocab)
 # END
 
-spacy_es = spacy.load("es_core_news_md")
 stanza_en = stanza.Pipeline("en", processors="tokenize,ner", 
                             package={"ner": ["conll03"]},
                             tokenize_pretokenized=True)
@@ -73,7 +73,7 @@ def load_subtitles(filepath):
 
     args: filepath (string, full path of the subtitle file)
 
-    return: words (list of all words in the file),text (string of continuous 
+    return: words (list of all words in the file), text (string of continuous 
     text without blank lines and line breaks)
 
     note: the file path depends on the storage location of the file on the 
@@ -82,7 +82,7 @@ def load_subtitles(filepath):
 
     text = ""
 
-    with open(filepath, "r", encoding="utf-8") as infile:
+    with open(filepath, "r", encoding="latin-1") as infile:
         for line in infile:
 
             # if the line is not empty add it to the text
@@ -95,7 +95,7 @@ def load_subtitles(filepath):
     text = re.sub(r'\'', r' \' ', text)
     text = re.sub(r'\\', r'', text)
 
-    words = text.split(" ")
+    words = text.split()
 
     return words, text
 
@@ -267,104 +267,3 @@ def eval_subtitles(word_list, spacy_labels, stanza_labels):
         concordance = concordance / len(spacy_labels)
 
         return concordance, differences
-
-
-# TEST
-
-#print(label_match("O","O")) # True
-#print(label_match("O","B-LOC")) # False
-#print(label_match("B-LOC","B-LOC")) # True
-#print(label_match("B-LOC","S-LOC")) # True
-#print(label_match("B-LOC","B-ORG")) # False
-
-#path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
-#path_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/es-europarl.test.conll02"
-#w_en, l_en, t_en = load_europarl(path_en)
-#w_es, l_es, t_es = load_europarl(path_es)
-#print(t_en)
-
-#entities_sp = ner(t_en, "spacy", "en")
-#print(len(w_en))
-#print(len(entities_sp))
-#for i in range(len(w_en)):
-    #print(w_en[i] + "\t" + l_en[i] + "\t" + entities_sp[i])
-    #if w_en[i] != entities_sp[i]:
-    #    print("falsch: " + w_en[i] + " " + entities_sp[i])
-#print("FERTIG")
-#print(entities_sp)
-#print("-----------------------------------------------------------------------")
-#print(postprocess_labels(entities_sp))
-
-#entities_sp = ner(t_es, "spacy", "es")
-#print(len(w_es))
-#print(len(entities_sp))
-#for i in range(len(w_es)):
-    #print(w_es[i] + "\t" + l_es[i] + "\t" + entities_sp[i])
-    #if w_es[i] != entities_sp[i]:
-    #    print("falsch: " + w_es[i] + " " + entities_sp[i])
-#print("FERTIG")
-
-#entities_st = ner(t_en, "stanza", "en")
-#print(len(w_en))
-#print(len(entities_st))
-#print("Word\tGoldLabel\tPrediction")
-#for i in range(len(w_en)):
-    #print(w_en[i] + "\t" + l_en[i] + "\t" + entities_st[i])
-#print("richtig")
-#print(*entities_st, sep = '\n')
-
-#accuracy, differences = eval_europarl(w_en, l_en, entities_st, "stanza")
-#print(accuracy)
-#print("Word:                    Gold Label:    Prediction:    ")
-#for i in range(len(differences)):
-#    print(f"{differences[i][0]:<25}{differences[i][1]:<15}{differences[i][2]:<15}")
-
-#entities_st = ner(t_es, "stanza", "es")
-#accuracy, differences = eval_europarl(w_es, l_es, entities_st, "stanza")
-#print("Accuracy: " + str(accuracy))
-#print(len(w_es))
-#print(len(entities_st))
-#for i in range(len(w_es)):
-    #print(w_es[i] + "\t" + l_es[i] + "\t" + entities_st[i])
-#print(*entities_st, sep = '\n')
-#print("Index:  Word:                    Gold Label:    Prediction:    ")
-#for i in range(len(differences)):
-#    print(f"{differences[i][0]:<8}{differences[i][1]:<25}{differences[i][2]:<15}{differences[i][3]:<15}")
-
-#accuracy, differences = eval_europarl(w_es, l_es, entities_st, "stanza")
-#print(accuracy)
-#print("Word:                    Gold Label:    Prediction:    ")
-#for i in range(len(differences)):
-#    print(f"{differences[i][0]:<25}{differences[i][1]:<15}{differences[i][2]:<15}")
-
-
-"""PROBLEM: Invalid empty string in whitespace tokenizer"""
-
-#path_eh_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (EN).txt"
-#path_eh_es = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/El Hoyo (ES).txt"
-part_bttf = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Movie subtitles/Back To The Future (EN).txt"
-
-words, text = load_subtitles(part_bttf)
-#print(text)
-print("start|" + text[179] + "|end")
-labels = ner(text, "spacy", "en")
-#words_en, text_en = load_subtitles(path_eh_en)
-#text_es = load_subtitles(path_eh_es)
-#print(words_en)
-#print(text_en)
-#print(len(text_en))
-#print("start|" + text_en[7419:7430] + "|end")
-#print("start|" + text_en[7426] + "|end")
-
-#entities = ner(text, "spacy", "en")
-#entities_sp_en = ner(text_en, "spacy", "en")
-#entities_st_en = ner(text_en, "stanza", "en")
-
-#print(len(entities_sp_en))
-#print(len(entities_st_en))
-
-#entities_sp_es = ner(text_es, "spacy", "es")
-#entities_st_es = ner(text_es, "stanza", "es")
-
-#print(len(entities_sp_es))
-#print(len(entities_st_es))
