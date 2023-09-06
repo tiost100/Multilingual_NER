@@ -1,8 +1,13 @@
 from utils import load_europarl, ner, eval_europarl
 from time import perf_counter
+import os
+
+# Get the full path of the directory where the current file is located
+dir_path = os.path.dirname(os.path.abspath(__file__))
+dir_path = dir_path.replace('\\','/')
 
 # Load the English europarl-data
-path_en = "C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/Europarl Corpus/en-europarl.test.conll02"
+path_en = f"{dir_path}/Europarl Corpus/en-europarl.test.conll02"
 words, labels, text = load_europarl(path_en)
 
 """---------------------------------SPACY-----------------------------------"""
@@ -19,7 +24,7 @@ accuracy_spacy, differences_spacy = eval_europarl(words, labels, entities_spacy,
 # Print the SpaCy results
 # note: the file path depends on the storage location of the file on the 
 # computer, and can vary from computer to computer
-with open("C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/europarl_en_spacy_eval.txt", "w") as outfile:
+with open(f"{dir_path}/Europarl/europarl_en_spacy_eval.txt", "w") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds: {round(duration_spacy, 3)} sec\n")
     outfile.write("\n")
     outfile.write(f"Accuracy of the SpaCy NER in percent: {round(accuracy_spacy * 100, 3)} %\n")
@@ -46,7 +51,7 @@ accuracy_stanza, differences_stanza = eval_europarl(words, labels, entities_stan
 # Print the Stanza results
 # note: the file path depends on the storage location of the file on the 
 # computer, and can vary from computer to computer
-with open("C:/Users/Tim.O/Documents/Studium/4. Semester/Advanced Python for NLP/ABSCHLUSSPROJEKT/europarl_en_stanza_eval.txt", "w") as outfile:
+with open(f"{dir_path}/Europarl/europarl_en_stanza_eval.txt", "w") as outfile:
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza, 3)} sec\n")
     outfile.write("\n")
     outfile.write(f"Accuracy of the Stanza NER in percent: {round(accuracy_stanza * 100, 3)} %\n")
