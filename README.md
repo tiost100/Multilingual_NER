@@ -44,6 +44,12 @@ The following Python files are available to use:
  - `back_to_the_future`  | Does an evaluation on the 'Back To The Future' subtitles and places the results into 'back_to_the_future_en_eval.txt' and 'back_to_the_future_es_eval.txt' in the 'Back_To_The_Future' folder.
  - `europarl_en` and `europarl_es` | Both do an evaluation on the 'Europarl' Corpus. For the English and for the Spanish translation. The results are split into four text documents that can be found in the 'Europarl' folder.
 
+#### Additional Information
+
+Do not have the text files (such as 'europarl_en_spacy_eval') open while the evaluation process is ongoing. 
+If done so, the text file will not change (stay empty if previously empty).
+To solve the issue just close and reopen the file again.
+
 ## Technologies/Sources:
 We used following tools resp. corpora in this project:
 - SpaCy NLP tool:
