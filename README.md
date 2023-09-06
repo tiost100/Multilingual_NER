@@ -5,8 +5,9 @@
 2. [Status](#status)
 3. [Requirements](#requirements)
 4. [Download](#download)
-5. [Technologies/Sources](#technologiessources)
-6. [Licence](#licence)
+5. [Usage](#usage)
+6. [Technologies/Sources](#technologiessources)
+7. [Licence](#licence)
 
 ## General Info:
 In this project, we investigate the performance of the NLP tools SpaCy and Stanza on Named Entity Recognition (NER) in English and Spanish. In the first step, we compare the accuracy and runtime of the NER methods of the two tools on parallel annotated transcriptions of European Parliament sessions (Europarl corpus). These were manually annotated word by word in CoNLL 2002/2003 format; there are 4 entity types: PER, LOC, ORG and MISC. Then, on selected unannotated movie subtitle files in English and Spanish (Open Subtitles), we analyze the level of concordance in SpaCy and Stanza predictions and what was annotated differently in the two NLP tools.
@@ -30,6 +31,8 @@ In order for the programs to work on your computer, please download the followin
 ## Download:
 To be able to run the project on your own computer, please clone this GitHub repository by running the following command in your terminal; you have to run the terminal as administrator:
 <pre>git clone https://github.com/tiost100/Multilingual_NER</pre>
+
+## Usage:
 
 ## Technologies/Sources:
 We used following tools resp. corpora in this project:
