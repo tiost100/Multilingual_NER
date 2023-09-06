@@ -29,10 +29,20 @@ In order for the programs to work on your computer, please download the followin
 - Stanza:<pre>pip install stanza</pre>
 
 ## Download:
-To be able to run the project on your own computer, please clone this GitHub repository by running the following command in your terminal; you have to run the terminal as administrator:
+To be able to run the project on your computer, please clone this GitHub repository by running the following command in your terminal; you have to run the terminal as administrator:
 <pre>git clone https://github.com/tiost100/Multilingual_NER</pre>
 
 ## Usage:
+To use the use the file in this repository do as followed.
+ - Open your Command Prompt or Windows Terminal.
+ - Navigate to the directory where your Python file is located using the `cd` command.
+ - Type `python` followed by the name of one of the Python files, including the `.py` extension.
+ - Press Enter to run the Python file.
+
+The following Python files are available to use:
+ - `el_hoyo`  | Does an evaluation on the 'El Hoyo' subtitles and places the results into 'el_hoyo_en_eval.txt' and 'el_hoyo_es_eval.txt' in the 'El_Hoyo' folder.
+ - `back_to_the_future`  | Does an evaluation on the 'Back To The Future' subtitles and places the results into 'back_to_the_future_en_eval.txt' and 'back_to_the_future_es_eval.txt' in the 'Back_To_The_Future' folder.
+ - `europarl_en` and `europarl_es` | Both do an evaluation on the 'Europarl' Corpus. For the English and for the Spanish translation. The results are split into four text documents that can be found in the 'Europarl' folder.
 
 ## Technologies/Sources:
 We used following tools resp. corpora in this project:
