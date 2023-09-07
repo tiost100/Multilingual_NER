@@ -4,10 +4,13 @@ import os
 
 # Get the full path of the directory where the current file is located
 dir_path = os.path.dirname(os.path.abspath(__file__))
-dir_path = dir_path.replace('\\','/')
 
-path_en = f"{dir_path}/Movie subtitles/Back To The Future (EN).txt"
-path_es = f"{dir_path}/Movie subtitles/Back To The Future (ES).txt"
+# get the parent directory path
+parent_dir_path = os.path.dirname(dir_path)
+parent_dir_path = parent_dir_path.replace('\\','/')
+
+path_en = f"{parent_dir_path}/Movie subtitles/El Hoyo (EN).txt"
+path_es = f"{parent_dir_path}/Movie subtitles/El Hoyo (ES).txt"
 
 words_en, text_en = load_subtitles(path_en)
 words_es, text_es = load_subtitles(path_es)
@@ -31,7 +34,7 @@ concordance_en, differences_en = eval_subtitles(words_en, entities_spacy_en,
                                                 entities_stanza_en)
 
 # Print the SpaCy results
-with open(f"{dir_path}/Evaluation Results/back_to_the_future_en_eval.txt", "w", encoding="latin-1") as outfile:
+with open(f"{parent_dir_path}/Evaluation Results/el_hoyo_en_eval.txt", "w", encoding="latin-1") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds:  {round(duration_spacy_en, 3)} sec\n")
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza_en, 3)} sec\n")
     outfile.write("\n")
@@ -64,7 +67,7 @@ concordance_es, differences_es = eval_subtitles(words_es, entities_spacy_es,
                                                 entities_stanza_es)
 
 # Print the SpaCy results
-with open(f"{dir_path}/Evaluation Results/back_to_the_future_es_eval.txt", "w", encoding="latin-1") as outfile:
+with open(f"{parent_dir_path}/Evaluation Results/el_hoyo_es_eval.txt", "w", encoding="latin-1") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds:  {round(duration_spacy_es, 3)} sec\n")
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza_es, 3)} sec\n")
     outfile.write("\n")

@@ -1,4 +1,4 @@
-Duration of the Stanza NER in seconds: 524.233 sec
+Duration of the Stanza NER in seconds: 413.985 sec
 
 Accuracy of the Stanza NER in percent: 96.698 %
 

@@ -4,10 +4,13 @@ import os
 
 # Get the full path of the directory where the current file is located
 dir_path = os.path.dirname(os.path.abspath(__file__))
-dir_path = dir_path.replace('\\','/')
+
+# get the parent directory path
+parent_dir_path = os.path.dirname(dir_path)
+parent_dir_path = parent_dir_path.replace('\\','/')
 
 # Load the Spanish europarl-data
-path_es = f"{dir_path}/Europarl Corpus/en-europarl.test.conll02"
+path_es = f"{parent_dir_path}/Europarl Corpus/es-europarl.test.conll02"
 words, labels, text = load_europarl(path_es)
 
 """---------------------------------SPACY-----------------------------------"""
@@ -22,7 +25,7 @@ duration_spacy = stop_spacy - start_spacy
 accuracy_spacy, differences_spacy = eval_europarl(words, labels, entities_spacy, "spacy")
 
 # Print the SpaCy results
-with open(f"{dir_path}/Evaluation Results/europarl_es_spacy_eval.txt", "w") as outfile:
+with open(f"{parent_dir_path}/Evaluation Results/europarl_es_spacy_eval.txt", "w") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds: {round(duration_spacy, 3)} sec\n")
     outfile.write("\n")
     outfile.write(f"Accuracy of the SpaCy NER in percent: {round(accuracy_spacy * 100, 3)} %\n")
@@ -47,7 +50,7 @@ duration_stanza = stop_stanza - start_stanza
 accuracy_stanza, differences_stanza = eval_europarl(words, labels, entities_stanza, "stanza")
 
 # Print the Stanza results
-with open(f"{dir_path}/Evaluation Results/europarl_es_stanza_eval.txt", "w") as outfile:
+with open(f"{parent_dir_path}/Evaluation Results/europarl_es_stanza_eval.txt", "w") as outfile:
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza, 3)} sec\n")
     outfile.write("\n")
     outfile.write(f"Accuracy of the Stanza NER in percent: {round(accuracy_stanza * 100, 3)} %\n")

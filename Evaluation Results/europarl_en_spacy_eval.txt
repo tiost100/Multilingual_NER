@@ -1,4 +1,4 @@
-Duration of the SpaCy NER in seconds: 8.392 sec
+Duration of the SpaCy NER in seconds: 7.473 sec
 
 Accuracy of the SpaCy NER in percent: 95.909 %
 
