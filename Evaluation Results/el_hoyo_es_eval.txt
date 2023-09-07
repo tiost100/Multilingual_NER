@@ -1,5 +1,5 @@
-Duration of the SpaCy NER in seconds:  1.966 sec
-Duration of the Stanza NER in seconds: 139.471 sec
+Duration of the SpaCy NER in seconds:  1.811 sec
+Duration of the Stanza NER in seconds: 115.46 sec
 
 Concordance of SpaCy and Stanza in percent: 79.935 %
 
