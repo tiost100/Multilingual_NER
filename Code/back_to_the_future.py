@@ -34,7 +34,7 @@ concordance_en, differences_en = eval_subtitles(words_en, entities_spacy_en,
                                                 entities_stanza_en)
 
 # Print the SpaCy results
-with open(f"{parent_dir_path}/Data/Evaluation Results/back_to_the_future_en_eval.txt", "w", encoding="latin-1") as outfile:
+with open(f"{parent_dir_path}/Evaluation Results/back_to_the_future_en_eval.txt", "w", encoding="latin-1") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds:  {round(duration_spacy_en, 3)} sec\n")
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza_en, 3)} sec\n")
     outfile.write("\n")
@@ -67,7 +67,7 @@ concordance_es, differences_es = eval_subtitles(words_es, entities_spacy_es,
                                                 entities_stanza_es)
 
 # Print the SpaCy results
-with open(f"{parent_dir_path}/Data/Evaluation Results/back_to_the_future_es_eval.txt", "w", encoding="latin-1") as outfile:
+with open(f"{parent_dir_path}/Evaluation Results/back_to_the_future_es_eval.txt", "w", encoding="latin-1") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds:  {round(duration_spacy_es, 3)} sec\n")
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza_es, 3)} sec\n")
     outfile.write("\n")
