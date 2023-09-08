@@ -29,11 +29,11 @@ entities_stanza_en = ner(text_en, "stanza", "en")
 stop_stanza_en = perf_counter()
 duration_stanza_en = stop_stanza_en - start_stanza_en
 
-# Evaluate the labels predicted by SpaCy
+# Evaluate the labels predicted by SpaCy and Stanza
 concordance_en, differences_en = eval_subtitles(words_en, entities_spacy_en, 
                                                 entities_stanza_en)
 
-# Print the SpaCy results
+# Print the results for English
 with open(f"{parent_dir_path}/Evaluation Results/back_to_the_future_en_eval.txt", "w", encoding="latin-1") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds:  {round(duration_spacy_en, 3)} sec\n")
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza_en, 3)} sec\n")
@@ -62,11 +62,11 @@ entities_stanza_es = ner(text_es, "stanza", "es")
 stop_stanza_es = perf_counter()
 duration_stanza_es = stop_stanza_es - start_stanza_es
 
-# Evaluate the labels predicted by SpaCy
+# Evaluate the labels predicted by SpaCy and Stanza
 concordance_es, differences_es = eval_subtitles(words_es, entities_spacy_es, 
                                                 entities_stanza_es)
 
-# Print the SpaCy results
+# Print the results for Spanish
 with open(f"{parent_dir_path}/Evaluation Results/back_to_the_future_es_eval.txt", "w", encoding="latin-1") as outfile:
     outfile.write(f"Duration of the SpaCy NER in seconds:  {round(duration_spacy_es, 3)} sec\n")
     outfile.write(f"Duration of the Stanza NER in seconds: {round(duration_stanza_es, 3)} sec\n")
