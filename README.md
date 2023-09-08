@@ -30,7 +30,7 @@ To be able to run the project on your computer, please clone this GitHub reposit
 ## Usage:
 To use the use the file in this repository do as followed.
  - Open your Command Prompt or Windows Terminal.
- - Navigate to the directory where your Python file is located using the `cd` command.
+ - Navigate to the directory into the 'Code' folder where the Python files are located using the `cd` command.
  - Type `python` followed by the name of one of the Python files, including the `.py` extension.
  - Press Enter to run the Python file.
 
@@ -39,7 +39,7 @@ The following Python files are available to use:
  - `back_to_the_future`  | Does an evaluation on the 'Back To The Future' subtitles.
  - `europarl_en` and `europarl_es` | Both do an evaluation on the 'Europarl' Corpus. For the English and for the Spanish translation.
 
-   The results of the evaluation can be found in the "Evaluation Results" folder. 
+   The results of the evaluation can be found under the "Data" folder in "Evaluation Results". 
 
 #### Additional Information
 
