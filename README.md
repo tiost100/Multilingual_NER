@@ -39,7 +39,7 @@ The following Python files are available to use:
  - `back_to_the_future`  | Does an evaluation on the 'Back To The Future' subtitles.
  - `europarl_en` and `europarl_es` | Both do an evaluation on the 'Europarl' Corpus. For the English and for the Spanish translation.
 
-   The results of the evaluation can be found under the ***Data folder*** in ***Evaluation Results***. 
+   The results of the evaluation can be found in the ***Evaluation Results*** folder. 
 
 #### Additional Information
 
