@@ -9,7 +9,7 @@
 6. [Licence](#licence)
 
 ## General Info:
-In this project, we investigate the performance of the NLP tools SpaCy and Stanza on Named Entity Recognition (NER) in English and Spanish. In the first step, we compare the accuracy and runtime of the NER methods of the two tools on parallel annotated transcriptions of European Parliament sessions (Europarl corpus). These were manually annotated word by word in CoNLL 2002/2003 format; there are 4 entity types: PER, LOC, ORG and MISC. Then, on selected unannotated movie subtitle files in English and Spanish (Open Subtitles), we analyze the level of concordance in SpaCy and Stanza predictions and what was annotated differently in the two NLP tools.
+In this project done in the *Advanced Python for NLP* class at *Heinrich-Heine-Universität Düsseldorf*, we (Shunde Zhang and Tim Ostrolucký) investigate the performance of the NLP tools SpaCy and Stanza on Named Entity Recognition (NER) in English and Spanish. In the first step, we compare the accuracy and runtime of the NER methods of the two tools on parallel annotated transcriptions of European Parliament sessions (Europarl corpus). These were manually annotated word by word in CoNLL 2002/2003 format; there are 4 entity types: PER, LOC, ORG and MISC. Then, on selected unannotated movie subtitle files in English and Spanish (Open Subtitles), we analyze the level of concordance in SpaCy and Stanza predictions and what was annotated differently in the two NLP tools.
 
 The utils.py file contains all the auxiliary methods needed to load the data, perform Named Entity Recognition, and evaluate the results. In the remaining Python files the evaluations of the different files are executed; the results are loaded into the .txt files with the respective file names, such as europarl_en_eval.txt. You can use all Python files except utils.py as a starting point, because the different programs do not build on each other.
 
@@ -30,7 +30,7 @@ To be able to run the project on your computer, please clone this GitHub reposit
 ## Usage:
 To use the use the file in this repository do as followed.
  - Open your Command Prompt or Windows Terminal.
- - Navigate to the directory into the 'Code' folder where the Python files are located using the `cd` command.
+ - Navigate to the directory into the ***Code*** folder where the Python files are located using the `cd` command.
  - Type `python` followed by the name of one of the Python files, including the `.py` extension.
  - Press Enter to run the Python file.
 
@@ -39,7 +39,7 @@ The following Python files are available to use:
  - `back_to_the_future`  | Does an evaluation on the 'Back To The Future' subtitles.
  - `europarl_en` and `europarl_es` | Both do an evaluation on the 'Europarl' Corpus. For the English and for the Spanish translation.
 
-   The results of the evaluation can be found under the "Data" folder in "Evaluation Results". 
+   The results of the evaluation can be found under the ***Data folder*** in ***Evaluation Results***. 
 
 #### Additional Information
 
