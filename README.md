@@ -2,12 +2,11 @@
 
 ## Table of Contents
 1. [General Info](#general-info)
-2. [Status](#status)
-3. [Requirements](#requirements)
-4. [Download](#download)
-5. [Usage](#usage)
-6. [Technologies/Sources](#technologiessources)
-7. [Licence](#licence)
+2. [Requirements](#requirements)
+3. [Download](#download)
+4. [Usage](#usage)
+5. [Technologies/Sources](#technologiessources)
+6. [Licence](#licence)
 
 ## General Info:
 In this project, we investigate the performance of the NLP tools SpaCy and Stanza on Named Entity Recognition (NER) in English and Spanish. In the first step, we compare the accuracy and runtime of the NER methods of the two tools on parallel annotated transcriptions of European Parliament sessions (Europarl corpus). These were manually annotated word by word in CoNLL 2002/2003 format; there are 4 entity types: PER, LOC, ORG and MISC. Then, on selected unannotated movie subtitle files in English and Spanish (Open Subtitles), we analyze the level of concordance in SpaCy and Stanza predictions and what was annotated differently in the two NLP tools.
@@ -15,10 +14,6 @@ In this project, we investigate the performance of the NLP tools SpaCy and Stanz
 The utils.py file contains all the auxiliary methods needed to load the data, perform Named Entity Recognition, and evaluate the results. In the remaining Python files the evaluations of the different files are executed; the results are loaded into the .txt files with the respective file names, such as europarl_en_eval.txt. You can use all Python files except utils.py as a starting point, because the different programs do not build on each other.
 
 For further information, please see the report.
-
-## Status:
-- Europarl data: DONE
-- Subtitles: IN PROGRESS
 
 ## Requirements:
 In order for the programs to work on your computer, please download the following:
