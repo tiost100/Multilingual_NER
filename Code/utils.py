@@ -116,6 +116,9 @@ def ner(text, model, lang):
     if model == "spacy":
         if lang == "en":
             doc = spacy_en(text)
+            # ent_iob_: return the Named Entities in the BIO format, and the
+            # non-entities as well ("O")
+            # ent_type_: type of the entity according to the SpaCy tag set
             preds = [doc[i].ent_iob_ + "-" + doc[i].ent_type_ for i in range(len(doc))]
         elif lang == "es":
             doc = spacy_es(text)
@@ -123,6 +126,7 @@ def ner(text, model, lang):
     elif model == "stanza":
         if lang == "en":
             doc = stanza_en(text)
+            # token.ner: return the Named Entity tag of the current token
             preds = [token.ner for sent in doc.sentences for token in sent.tokens]
         elif lang == "es":
             doc = stanza_es(text)
@@ -220,15 +224,21 @@ def eval_europarl(word_list, gold_labels, pred_labels, model):
             pred_labels = postprocess_labels(pred_labels)
 
         for i in range(len(gold_labels)):
+            # if the current label matches with the corresponding gold label
+            # add 1 to the accuracy counter else add the current index to the
+            # list of indexes of words which differ from the gold labels
             if label_match(gold_labels[i], pred_labels[i]):
                 accuracy += 1.0
             else:
                 diff_indexes.append(i)
 
+        # create the list differences
         for index in diff_indexes:
             diff = [index, word_list[index], gold_labels[index], pred_labels[index]]
             differences.append(diff)
 
+        # divide the accuracy counter by the length of the label list to get
+        # the accuracy in percent
         accuracy = accuracy / len(gold_labels)
 
         return accuracy, differences
@@ -255,15 +265,22 @@ def eval_subtitles(word_list, spacy_labels, stanza_labels):
         spacy_labels = postprocess_labels(spacy_labels)
 
         for i in range(len(spacy_labels)):
+            # if the current SpaCy and Stanza labels match add 1 to the 
+            # concordance counter else add the current index to the
+            # list of indexes of words with different SpaCy and Stanza
+            # predictions
             if label_match(spacy_labels[i], stanza_labels[i]):
                 concordance += 1.0
             else:
                 diff_indexes.append(i)
 
+        # create the list differences
         for index in diff_indexes:
             diff = [index, word_list[index], spacy_labels[index], stanza_labels[index]]
             differences.append(diff)
 
+        # divide the concordance counter by the length of the label list to get
+        # the concordance in percent
         concordance = concordance / len(spacy_labels)
 
         return concordance, differences
