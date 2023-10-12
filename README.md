@@ -18,10 +18,10 @@ For further information, please see the report.
 ## Requirements:
 In order for the programs to work on your computer, please download the following:
 - Python version 3.11.4
-- SpaCy:<pre>pip install -U pip setuptools wheel <br>pip install -U spacy </pre>
+- SpaCy (v3.6):<pre>pip install -U pip setuptools wheel <br>pip install -U spacy </pre>
   - SpaCy language models:
     <pre>python -m spacy download en_core_web_md    # for English <br>python -m spacy download es_core_news_md   # for Spanish</pre>
-- Stanza:<pre>pip install stanza</pre>
+- Stanza (1.4.0):<pre>pip install stanza</pre>
 
 ## Download:
 To be able to run the project on your computer, please clone this GitHub repository by running the following command in your terminal; you have to run the terminal as administrator:
