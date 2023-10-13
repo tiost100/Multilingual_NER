@@ -47,6 +47,9 @@ Do not have the text files (such as 'europarl_en_spacy_eval') open while the eva
 If done so, the text file will not change (stay empty if previously empty).
 To solve the issue just close and reopen the file again.
 
+#### Running Our Code with a GPU
+If you don't have a graphics card in your computer but still want to run our code with a GPU, please open the notebook `Multilingual_NER_with_GPU.ipynb` in Google Colab and change the runtime type to T4 GPU.
+
 ## Technologies/Sources:
 We used following tools resp. corpora in this project:
 - SpaCy NLP tool:
