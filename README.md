@@ -28,7 +28,7 @@ To be able to run the project on your computer, please clone this GitHub reposit
 <pre>git clone https://github.com/tiost100/Multilingual_NER</pre>
 
 ## Usage:
-To use the use the file in this repository do as followed.
+To use the files in this repository do as followed.
  - Open your Command Prompt or Windows Terminal.
  - Navigate to the directory into the ***Code*** folder where the Python files are located using the `cd` command.
  - Type `python` followed by the name of one of the Python files, including the `.py` extension.
